@@ -377,25 +377,25 @@ import org.zoolu.sip.provider.SipProvider;
 				                createIntent(AutoAnswer.class), flags);
 						break;
 		        	case CALL_NOTIFICATION:
-					    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && !InCallScreen.started)
-					    	notification = new Notification.Builder(mContext,"call")
-		        				.setFullScreenIntent(PendingIntent.getActivity(mContext, 0,
-		        						createIntent(Sipdroid.class), flags), true)
-		        				.setSmallIcon(mInCallResId).build();
+//					    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O && !InCallScreen.started)
+//					    	notification = new Notification.Builder(mContext,"call")
+//		        				.setFullScreenIntent(PendingIntent.getActivity(mContext, 0,
+//		        						createIntent(Sipdroid.class), flags), true)
+//		        				.setSmallIcon(mInCallResId).build();
 		        	default:
-		        		if (type >= REGISTER_NOTIFICATION && mSipdroidEngine != null && type != REGISTER_NOTIFICATION+mSipdroidEngine.pref &&
-		        				mInCallResId == R.drawable.sym_presence_available)
-							notification.contentIntent = PendingIntent.getActivity(mContext, 0,
-						            createIntent(ChangeAccount.class), flags);
-		        		else
-		        			notification.contentIntent = PendingIntent.getActivity(mContext, 0,
-		        					createIntent(Sipdroid.class), flags);
-				        if (mInCallResId == R.drawable.sym_presence_away) {
-				        	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
-				        	notification.ledARGB = 0xffff0000; /* red */
-				        	notification.ledOnMS = 125;
-				        	notification.ledOffMS = 2875;
-				        }
+//		        		if (type >= REGISTER_NOTIFICATION && mSipdroidEngine != null && type != REGISTER_NOTIFICATION+mSipdroidEngine.pref &&
+//		        				mInCallResId == R.drawable.sym_presence_available)
+//							notification.contentIntent = PendingIntent.getActivity(mContext, 0,
+//						            createIntent(ChangeAccount.class), flags);
+//		        		else
+//		        			notification.contentIntent = PendingIntent.getActivity(mContext, 0,
+//		        					createIntent(Sipdroid.class), flags);
+//				        if (mInCallResId == R.drawable.sym_presence_away) {
+//				        	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+//				        	notification.ledARGB = 0xffff0000; /* red */
+//				        	notification.ledOnMS = 125;
+//				        	notification.ledOffMS = 2875;
+//				        }
 		        		break;
 		        	}			
 		        	notification.flags |= Notification.FLAG_ONGOING_EVENT;
