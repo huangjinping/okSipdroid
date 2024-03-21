@@ -41,7 +41,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.CallLog.Calls;
-import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -158,7 +157,7 @@ public class Sipdroid extends Activity implements OnDismissListener {
                                 .setCancelable(true)
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int whichButton) {
-                                        ActivityCompat.requestPermissions(Sipdroid.this, perms, 0);
+                                        requestPermissions(perms, 0);
                                     }
                                 })
                                 .show();

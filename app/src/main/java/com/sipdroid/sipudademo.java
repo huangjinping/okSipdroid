@@ -24,6 +24,8 @@ public class sipudademo extends Activity {
             @Override
             public void onClick(View v) {
                 openOO1();
+//                openOO2();
+
             }
         });
 
@@ -52,10 +54,35 @@ public class sipudademo extends Activity {
         configSip.setProtocol("TCP");
         configSip.setPassword("@#123Qw");
         SipuaConfig.init(this, configSip);
-//        SipuaConfig.startInCall(this, "13611290917");
+//        SipuaConfig.startInCall(this, "10086");
 
         Intent intent = new Intent(this, Sipdroid.class);
-        intent.putExtra(Sipdroid.numberKey, "13611290917");
+        intent.putExtra(Sipdroid.numberKey, "10086");
+        startActivity(intent);
+    }
+
+    private void openOO2() {
+
+//            try {
+//                Thread.sleep(10000);
+//            }catch (Exception E){
+//                E.printStackTrace();
+//            }
+
+        ConfigSip configSip = new ConfigSip();
+//        configSip.setServer("13.244.48.100");
+        configSip.setServer("13.246.65.101");
+
+        configSip.setDns0("8.8.8.8");
+        configSip.setPort("65060");
+        configSip.setUsername("1001");
+        configSip.setProtocol("TCP");
+        configSip.setPassword("!@#123Qw");
+        SipuaConfig.init(this, configSip);
+
+
+        Intent intent = new Intent(this, Sipdroid.class);
+        intent.putExtra(Sipdroid.numberKey, "1002");
         startActivity(intent);
     }
 
