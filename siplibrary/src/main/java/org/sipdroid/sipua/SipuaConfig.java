@@ -11,7 +11,7 @@ import org.sipdroid.sipua.ui.Sipdroid;
 
 public class SipuaConfig {
 
-    final static String getSharedPrefsFile(Context context) {
+    public final static String getSharedPrefsFile(Context context) {
         String packageName = context.getPackageName();
         String result = packageName + "_preferences";
         return result;
@@ -27,12 +27,21 @@ public class SipuaConfig {
         edit.putString("protocol", configSip.getProtocol());
         edit.putString("protocol1", configSip.getProtocol());
         edit.putString("password", configSip.getPassword());
+        //   ------------------支持3g和wifi------------------------>>>>>>
+        edit.putBoolean("3g", true);
+        edit.putBoolean("wlan", true);
+//        edit.putBoolean("edge", true);
+        edit.putString("eargain", "1.0");
+        edit.putString("micgain", "1.0");
+        edit.putString("heargain", "1.0");
+
+
         edit.commit();
     }
 
     public static void startInCall(Activity activity, String target) {
         Receiver.engine(activity).registerMore();
-        Sipdroid.on(activity,true);
+        Sipdroid.on(activity, true);
         Receiver.engine(activity).call(target, true);
     }
 }

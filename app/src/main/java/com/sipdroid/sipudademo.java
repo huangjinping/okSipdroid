@@ -23,8 +23,8 @@ public class sipudademo extends Activity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openOO1();
-//                openOO2();
+//                openOO1();
+                openOO2();
 
             }
         });
@@ -75,14 +75,15 @@ public class sipudademo extends Activity {
 
         configSip.setDns0("8.8.8.8");
         configSip.setPort("65060");
-        configSip.setUsername("1001");
+        configSip.setUsername("1009");
         configSip.setProtocol("TCP");
         configSip.setPassword("!@#123Qw");
         SipuaConfig.init(this, configSip);
+//        SipuaConfig.startInCall(this, "0758520571");
 
 
         Intent intent = new Intent(this, Sipdroid.class);
-        intent.putExtra(Sipdroid.numberKey, "1002");
+        intent.putExtra(Sipdroid.numberKey, "0758520571");
         startActivity(intent);
     }
 

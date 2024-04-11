@@ -31,8 +31,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation fileTree(include: ['*.aar'], dir: 'libs')
-//    implementation project(path: ':siplibrary')
+//    implementation fileTree(include: ['*.aar'], dir: 'libs')
+    implementation project(path: ':siplibrary')
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
 //    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
 
