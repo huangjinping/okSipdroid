@@ -22,4 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="164dp"
         android:text="测试" />
+
+
+    <Button
+        android:id="@+id/btn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:text="去设置页面" />
 </LinearLayout>

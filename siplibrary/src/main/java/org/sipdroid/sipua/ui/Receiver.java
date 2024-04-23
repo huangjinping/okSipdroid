@@ -74,6 +74,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import com.jstun.core.util.AudioHelper;
+
 import org.sipdroid.media.Bluetooth;
 import org.sipdroid.media.RtpStreamReceiver;
 import org.sipdroid.media.RtpStreamSender;
@@ -793,8 +795,10 @@ import org.zoolu.sip.provider.SipProvider;
 	        } else
 		    if (intentAction.equals(Intent.ACTION_HEADSET_PLUG)) {
 		        headset = intent.getIntExtra("state", -1);
-	        	if (call_state == UserAgent.UA_STATE_INCALL)
-	        		engine(mContext).speaker(speakermode());
+	        	if (call_state == UserAgent.UA_STATE_INCALL){
+//					engine(mContext).speaker(speakermode());
+					AudioHelper.updateSpeaker(context);
+				}
 	        } else
 	        if (intentAction.equals(Intent.ACTION_SCREEN_OFF)) {
 	        	if (SipdroidEngine.pwl != null)

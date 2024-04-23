@@ -270,7 +270,9 @@
 <string name="settings_profile_dialog_profiles_title">用户配置</string>
 <string name="settings_profile_dialog_delete_title">删除用户配置</string>
 <string name="settings_profile_dialog_delete_text">确认要删除用户<xliff:g id="profile">%s</xliff:g>的配置吗?</string>
-<string name="settings_profile_export_error">导出用户配置失败！</string>
+
+
+    <string name="settings_profile_export_error">导出用户配置失败！</string>
 <string name="settings_profile_import_error">导入用户配置失败！</string>
 <string name="settings_profile_delete_error">删除用户配置失败！</string>
 <string name="settings_profile_delete_confirmation">成功删除用户配置。</string>

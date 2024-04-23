@@ -9,17 +9,21 @@ import android.widget.Toast;
 
 import org.sipdroid.sipua.ConfigSip;
 import org.sipdroid.sipua.SipuaConfig;
+import org.sipdroid.sipua.ui.Settings;
 import org.sipdroid.sipua.ui.Sipdroid;
 import org.sipdroid.sipuademo.R;
 
 public class sipudademo extends Activity {
     Button textView;
 
+    Button btn_setting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sipudademo);
         textView = findViewById(R.id.textView);
+        btn_setting = findViewById(R.id.btn_setting);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,6 +40,16 @@ public class sipudademo extends Activity {
                 Toast.makeText(sipudademo.this, "cccc", Toast.LENGTH_SHORT).show();
             }
         });
+        btn_setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SipuaConfig.deleteUser(sipudademo.this);
+                Intent intent = new Intent(sipudademo.this, Settings.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     private void openOO1() {
@@ -75,7 +89,7 @@ public class sipudademo extends Activity {
 
         configSip.setDns0("8.8.8.8");
         configSip.setPort("65060");
-        configSip.setUsername("1009");
+        configSip.setUsername("1998");
         configSip.setProtocol("TCP");
         configSip.setPassword("!@#123Qw");
         SipuaConfig.init(this, configSip);

@@ -9,6 +9,8 @@ import android.content.SharedPreferences;
 import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.Sipdroid;
 
+import java.io.File;
+
 public class SipuaConfig {
 
     public final static String getSharedPrefsFile(Context context) {
@@ -35,7 +37,6 @@ public class SipuaConfig {
         edit.putString("micgain", "1.0");
         edit.putString("heargain", "1.0");
 
-
         edit.commit();
     }
 
@@ -43,5 +44,36 @@ public class SipuaConfig {
         Receiver.engine(activity).registerMore();
         Sipdroid.on(activity, true);
         Receiver.engine(activity).call(target, true);
+    }
+
+
+    public static void deleteUser(Context context) {
+
+        try {
+            String packageName = context.getPackageName();
+
+            File pref_xml = new File("data/data/" + packageName + "/shared_prefs/" + getSharedPrefsFile(context) + ".xml");
+            if (pref_xml.exists()) {
+                pref_xml.delete();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+//        SharedPreferences setting_info = context.getSharedPreferences(getSharedPrefsFile(context), MODE_PRIVATE);
+//        SharedPreferences.Editor edit = setting_info.edit();
+//        edit.clear().commit();
+
+//        SharedPreferences setting_info = context.getSharedPreferences(getSharedPrefsFile(context), MODE_PRIVATE);
+//        SharedPreferences.Editor edit = setting_info.edit();
+//        edit.putString("server","");
+//        edit.putString("dns0", "");
+//        edit.putString("port", "");
+//        edit.putString("username", "");
+//        edit.putString("protocol", "");
+//        edit.putString("protocol1", "");
+//        edit.putString("password", "");
+//        edit.commit();
     }
 }

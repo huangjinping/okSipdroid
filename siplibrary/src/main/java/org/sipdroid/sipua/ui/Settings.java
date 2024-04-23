@@ -252,6 +252,8 @@ public class Settings extends PreferenceActivity implements OnSharedPreferenceCh
     private OnClickListener deleteOkButtonClick = new DialogInterface.OnClickListener() {
         public void onClick(DialogInterface dialog, int whichButton) {
             File profile = new File(sharedPrefsPath + profileFiles[profileToDelete]);
+
+
             boolean rv = false;
             // Check if the file exists and try to delete it
             if (profile.exists()) {
