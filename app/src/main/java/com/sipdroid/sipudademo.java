@@ -3,13 +3,15 @@ package com.sipdroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import org.sipdroid.sipua.ConfigSip;
+import org.sipdroid.sipua.RegisterStatusCallBack;
+import org.sipdroid.sipua.SipStatus;
 import org.sipdroid.sipua.SipuaConfig;
-import org.sipdroid.sipua.ui.Settings;
 import org.sipdroid.sipua.ui.Sipdroid;
 import org.sipdroid.sipuademo.R;
 
@@ -38,41 +40,63 @@ public class sipudademo extends Activity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(sipudademo.this, "cccc", Toast.LENGTH_SHORT).show();
+                openShiiis();
             }
         });
         btn_setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SipuaConfig.deleteUser(sipudademo.this);
-                Intent intent = new Intent(sipudademo.this, Settings.class);
-                startActivity(intent);
+//                SipuaConfig.deleteUser(sipudademo.this);
+//                Intent intent = new Intent(sipudademo.this, Settings.class);
+//                startActivity(intent);
+            }
+        });
+        SipuaConfig.registerSipCallBack(new RegisterStatusCallBack(100) {
+
+            @Override
+            protected void onRegisterStatusUpdate(SipStatus status) {
+
+                Log.d("terStatusUpdate", "=============" + status.getText());
             }
         });
 
-
     }
 
-    private void openOO1() {
+//    private void openOO1() {
+//
+////            try {
+////                Thread.sleep(10000);
+////            }catch (Exception E){
+////                E.printStackTrace();
+////            }
+//
+//        ConfigSip configSip = new ConfigSip();
+//        configSip.setServer("115.28.186.246");
+//        configSip.setDns0("115.28.186.246");
+//        configSip.setPort("65060");
+//        configSip.setUsername("9003");
+//        configSip.setProtocol("TCP");
+//        configSip.setPassword("@#123Qw");
+//        SipuaConfig.init(this, configSip);
+////        SipuaConfig.startInCall(this, "10086");
+//
+//        Intent intent = new Intent(this, Sipdroid.class);
+//        intent.putExtra(Sipdroid.numberKey, "10086");
+//        startActivity(intent);
+//    }
 
-//            try {
-//                Thread.sleep(10000);
-//            }catch (Exception E){
-//                E.printStackTrace();
-//            }
 
+    private void openShiiis() {
         ConfigSip configSip = new ConfigSip();
-        configSip.setServer("115.28.186.246");
-        configSip.setDns0("115.28.186.246");
-        configSip.setPort("65060");
-        configSip.setUsername("9003");
-        configSip.setProtocol("TCP");
-        configSip.setPassword("@#123Qw");
-        SipuaConfig.init(this, configSip);
-//        SipuaConfig.startInCall(this, "10086");
+//        configSip.setServer("13.244.48.100");
+        configSip.setServer("13.246.65.101");
 
-        Intent intent = new Intent(this, Sipdroid.class);
-        intent.putExtra(Sipdroid.numberKey, "10086");
-        startActivity(intent);
+        configSip.setDns0("8.8.8.8");
+        configSip.setPort("65060");
+        configSip.setUsername("1998");
+        configSip.setProtocol("TCP");
+        configSip.setPassword("!@#123Qw");
+        SipuaConfig.init(this, configSip);
     }
 
     private void openOO2() {
@@ -93,8 +117,8 @@ public class sipudademo extends Activity {
         configSip.setProtocol("TCP");
         configSip.setPassword("!@#123Qw");
         SipuaConfig.init(this, configSip);
-//        SipuaConfig.startInCall(this, "0758520571");
 
+//        SipuaConfig.startInCall(this, "0758520571");
 
         Intent intent = new Intent(this, Sipdroid.class);
         intent.putExtra(Sipdroid.numberKey, "0758520571");

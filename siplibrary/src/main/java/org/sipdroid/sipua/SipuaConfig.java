@@ -10,8 +10,12 @@ import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.Sipdroid;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SipuaConfig {
+
+    private static List<RegisterStatusCallBack> registerStatusCallBackList;
 
     public final static String getSharedPrefsFile(Context context) {
         String packageName = context.getPackageName();
@@ -38,6 +42,8 @@ public class SipuaConfig {
         edit.putString("heargain", "1.0");
 
         edit.commit();
+
+
     }
 
     public static void startInCall(Activity activity, String target) {
@@ -45,7 +51,6 @@ public class SipuaConfig {
         Sipdroid.on(activity, true);
         Receiver.engine(activity).call(target, true);
     }
-
 
     public static void deleteUser(Context context) {
 
@@ -75,5 +80,53 @@ public class SipuaConfig {
 //        edit.putString("protocol1", "");
 //        edit.putString("password", "");
 //        edit.commit();
+    }
+
+    public static void registerSipCallBack(RegisterStatusCallBack callBack) {
+        try {
+            if (registerStatusCallBackList == null) {
+                registerStatusCallBackList = new ArrayList<>();
+            }
+            for (int i = 0; i < registerStatusCallBackList.size(); i++) {
+                RegisterStatusCallBack call = registerStatusCallBackList.get(i);
+                if (call.key == callBack.key) {
+                    registerStatusCallBackList.remove(i);
+                }
+            }
+
+            registerStatusCallBackList.add(callBack);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void observer(SipStatus status) {
+        if (registerStatusCallBackList == null) {
+            return;
+        }
+        try {
+            for (RegisterStatusCallBack callBack : registerStatusCallBackList
+            ) {
+                callBack.onRegisterStatusUpdate(status);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void unRegisterSipCallBack(int key) {
+        try {
+            if (registerStatusCallBackList == null) {
+                registerStatusCallBackList = new ArrayList<>();
+            }
+            for (int i = 0; i < registerStatusCallBackList.size(); i++) {
+                RegisterStatusCallBack callBack = registerStatusCallBackList.get(i);
+                if (key == callBack.key) {
+                    registerStatusCallBackList.remove(i);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
