@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONObject;
 import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.Sipdroid;
 
@@ -82,7 +83,7 @@ public class SipuaConfig {
 //        edit.commit();
     }
 
-    public static void registerSipCallBack(RegisterStatusCallBack callBack) {
+    public static SipStatus registerSipCallBack(Context context, RegisterStatusCallBack callBack) {
         try {
             if (registerStatusCallBackList == null) {
                 registerStatusCallBackList = new ArrayList<>();
@@ -93,17 +94,36 @@ public class SipuaConfig {
                     registerStatusCallBackList.remove(i);
                 }
             }
-
             registerStatusCallBackList.add(callBack);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        SipStatus status = new SipStatus();
+        try {
+            String result = SpUtils.getString(context, SpUtils.SIP_STATE, "");
+            JSONObject root = new JSONObject(result);
+            String text = root.optString("text");
+            int mInCallResId = root.optInt("mInCallResId");
+            status.setText(text);
+            status.setmInCallResId(mInCallResId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return status;
     }
-
-    public static void observer(SipStatus status) {
+    public static void observer(Context context, SipStatus status) {
         if (registerStatusCallBackList == null) {
             return;
         }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("mInCallResId", status.getmInCallResId());
+            jsonObject.put("text", status.getText());
+            SpUtils.putString(context, SpUtils.SIP_STATE, jsonObject.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             for (RegisterStatusCallBack callBack : registerStatusCallBackList
             ) {

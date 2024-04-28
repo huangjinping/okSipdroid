@@ -325,7 +325,7 @@ public class Receiver extends BroadcastReceiver {
         SipStatus status = new SipStatus();
         status.setmInCallResId(mInCallResId);
         status.setText(text);
-        SipuaConfig.observer(status);
+        SipuaConfig.observer(mContext, status);
 
         if (android.os.Build.VERSION.SDK_INT >= 31)
             flags |= FLAG_IMMUTABLE;

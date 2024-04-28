@@ -51,7 +51,7 @@ public class sipudademo extends Activity {
 //                startActivity(intent);
             }
         });
-        SipuaConfig.registerSipCallBack(new RegisterStatusCallBack(100) {
+        SipuaConfig.registerSipCallBack(this,new RegisterStatusCallBack(100) {
 
             @Override
             protected void onRegisterStatusUpdate(SipStatus status) {
