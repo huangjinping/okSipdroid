@@ -34,7 +34,6 @@ public class sipudademo extends Activity {
             public void onClick(View v) {
 //                openOO1();
                 openOO2();
-
             }
         });
         Receiver.engine(this).registerMore();
@@ -56,7 +55,7 @@ public class sipudademo extends Activity {
 //                startActivity(intent);
             }
         });
-        SipuaConfig.registerSipCallBack(this,new RegisterStatusCallBack(UUID.randomUUID().toString()) {
+        SipuaConfig.registerSipCallBack(this, new RegisterStatusCallBack(UUID.randomUUID().toString()) {
 
             @Override
             protected void onRegisterStatusUpdate(SipStatus status) {
@@ -95,7 +94,6 @@ public class sipudademo extends Activity {
         ConfigSip configSip = new ConfigSip();
 //        configSip.setServer("13.244.48.100");
         configSip.setServer("13.246.65.101");
-
         configSip.setDns0("8.8.8.8");
         configSip.setPort("65060");
         configSip.setUsername("1998");
@@ -123,11 +121,11 @@ public class sipudademo extends Activity {
         configSip.setPassword("!@#123Qw");
         SipuaConfig.init(this, configSip);
 
-//        SipuaConfig.startInCall(this, "0758520571");
+        SipuaConfig.startInCall(this, "0758520571");
 
-        Intent intent = new Intent(this, Sipdroid.class);
-        intent.putExtra(Sipdroid.numberKey, "0758520571");
-        startActivity(intent);
+//        Intent intent = new Intent(this, Sipdroid.class);
+//        intent.putExtra(Sipdroid.numberKey, "0758520571");
+//        startActivity(intent);
     }
 
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_setting"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    style="@style/item_title"
+                    android:text="@string/settings_username"></TextView>
+
+                <EditText
+                    android:id="@+id/txt_username"
+                    style="@style/item_value"></EditText>
+
+                <TextView
+                    style="@style/item_title"
+                    android:text="@string/settings_password"></TextView>
+
+                <EditText
+                    android:id="@+id/txt_password"
+                    style="@style/item_value"></EditText>
+
+
+                <TextView
+                    style="@style/item_title"
+                    android:text="@string/settings_server"></TextView>
+
+                <EditText
+                    android:id="@+id/txt_server"
+                    style="@style/item_value"></EditText>
+
+                <TextView
+                    style="@style/item_title"
+                    android:text="@string/settings_port"></TextView>
+
+                <EditText
+                    android:id="@+id/txt_port"
+                    style="@style/item_value"></EditText>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/bg_item_value"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_phone2"></ImageView>
+
+                <EditText
+                    android:id="@+id/txt_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hint2"
+                    android:textColor="@color/text01"></EditText>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layout_submit"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_call_value0"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:id="@+id/img_call"
+                        android:layout_width="80dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/ic_boda1"></ImageView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="text"
+                android:textSize="30sp"
+                android:visibility="gone"></TextView>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

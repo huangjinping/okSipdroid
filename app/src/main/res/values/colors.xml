@@ -20,5 +20,12 @@
 -->
 
 <resources>
+    <color name="black">#000000</color>
+    <color name="text01">#808080</color>
+    <color name="enable0">#cccccc</color>
 
+    <color name="purple_700">#5296EF</color>
+    <color name="teal_200">#5296EF</color>
+    <color name="teal_700">#5296EF</color>
+    <color name="white">#ffffff</color>
 </resources>

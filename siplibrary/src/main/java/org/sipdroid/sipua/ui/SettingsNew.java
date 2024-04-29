@@ -8,7 +8,7 @@ import android.net.Uri;
 import android.os.PowerManager;
 
 public class SettingsNew {
-	static void ignoreBattery(Context context) {
+	public static void ignoreBattery(Context context) {
 		try {
 			Intent intent = new Intent();
 			String packageName = context.getPackageName();

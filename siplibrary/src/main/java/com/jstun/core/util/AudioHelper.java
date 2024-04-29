@@ -51,12 +51,12 @@ public class AudioHelper {
 //                    AudioManager.MODE_IN_CALL : AudioManager.MODE_NORMAL);
             Receiver.engine(context).speaker(AudioManager.MODE_NORMAL);
             if (BuildConfig.DEBUG) {
-                Toast.makeText(context, "==1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "==1", Toast.LENGTH_SHORT).show();
             }
         } else {
             Log.d("isHeadsetPlugged", "---------0");
             if (BuildConfig.DEBUG) {
-                Toast.makeText(context, "==0", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "==0", Toast.LENGTH_SHORT).show();
             }
         }
     }

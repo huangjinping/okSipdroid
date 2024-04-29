@@ -33,6 +33,20 @@
         android:icon="@drawable/icon64"
         android:label="@string/app_name_01"
         android:theme="@android:style/Theme.Holo">
+
+        <activity
+            android:name="com.sipdroid.NewsActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:showOnLockScreen="true"
+            android:showWhenLocked="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.sipdroid.sipudademo"
             android:configChanges="orientation|keyboardHidden"
@@ -40,10 +54,7 @@
             android:launchMode="singleInstance"
             android:showOnLockScreen="true"
             android:showWhenLocked="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
     </application>
 </manifest> 

@@ -25,6 +25,9 @@ public class SipuaConfig {
         return result;
     }
 
+
+
+
     public static void init(Context context, ConfigSip configSip) {
         SharedPreferences setting_info = context.getSharedPreferences(getSharedPrefsFile(context), MODE_PRIVATE);
         SharedPreferences.Editor edit = setting_info.edit();
