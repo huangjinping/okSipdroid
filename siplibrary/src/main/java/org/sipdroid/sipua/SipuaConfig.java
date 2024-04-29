@@ -5,6 +5,7 @@ import static android.content.Context.MODE_PRIVATE;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import org.json.JSONObject;
 import org.sipdroid.sipua.ui.Receiver;
@@ -90,27 +91,35 @@ public class SipuaConfig {
             }
             for (int i = 0; i < registerStatusCallBackList.size(); i++) {
                 RegisterStatusCallBack call = registerStatusCallBackList.get(i);
-                if (call.key == callBack.key) {
+                if (call.key.equals(callBack.key)) {
                     registerStatusCallBackList.remove(i);
                 }
             }
             registerStatusCallBackList.add(callBack);
+            System.out.println("==SipStatus===1====" + registerStatusCallBackList.size());
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         SipStatus status = new SipStatus();
+        status.setText("");
+        status.setmInCallResId(0);
         try {
             String result = SpUtils.getString(context, SpUtils.SIP_STATE, "");
-            JSONObject root = new JSONObject(result);
-            String text = root.optString("text");
-            int mInCallResId = root.optInt("mInCallResId");
-            status.setText(text);
-            status.setmInCallResId(mInCallResId);
+            if (!TextUtils.isEmpty(result)) {
+                JSONObject root = new JSONObject(result);
+                String text = root.optString("text");
+                int mInCallResId = root.optInt("mInCallResId");
+                status.setText(text);
+                status.setmInCallResId(mInCallResId);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return status;
     }
+
     public static void observer(Context context, SipStatus status) {
         if (registerStatusCallBackList == null) {
             return;
@@ -123,10 +132,10 @@ public class SipuaConfig {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         try {
             for (RegisterStatusCallBack callBack : registerStatusCallBackList
             ) {
+                status.setKey(callBack.key);
                 callBack.onRegisterStatusUpdate(status);
             }
         } catch (Exception e) {
@@ -134,14 +143,14 @@ public class SipuaConfig {
         }
     }
 
-    public static void unRegisterSipCallBack(int key) {
+    public static void unRegisterSipCallBack(String key) {
         try {
             if (registerStatusCallBackList == null) {
                 registerStatusCallBackList = new ArrayList<>();
             }
             for (int i = 0; i < registerStatusCallBackList.size(); i++) {
                 RegisterStatusCallBack callBack = registerStatusCallBackList.get(i);
-                if (key == callBack.key) {
+                if (key.equals(callBack.key)) {
                     registerStatusCallBackList.remove(i);
                 }
             }

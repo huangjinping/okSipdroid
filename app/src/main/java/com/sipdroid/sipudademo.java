@@ -12,8 +12,11 @@ import org.sipdroid.sipua.ConfigSip;
 import org.sipdroid.sipua.RegisterStatusCallBack;
 import org.sipdroid.sipua.SipStatus;
 import org.sipdroid.sipua.SipuaConfig;
+import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.Sipdroid;
 import org.sipdroid.sipuademo.R;
+
+import java.util.UUID;
 
 public class sipudademo extends Activity {
     Button textView;
@@ -34,6 +37,8 @@ public class sipudademo extends Activity {
 
             }
         });
+        Receiver.engine(this).registerMore();
+
 
         Button textView1 = findViewById(R.id.textView1);
         textView1.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +56,7 @@ public class sipudademo extends Activity {
 //                startActivity(intent);
             }
         });
-        SipuaConfig.registerSipCallBack(this,new RegisterStatusCallBack(100) {
+        SipuaConfig.registerSipCallBack(this,new RegisterStatusCallBack(UUID.randomUUID().toString()) {
 
             @Override
             protected void onRegisterStatusUpdate(SipStatus status) {

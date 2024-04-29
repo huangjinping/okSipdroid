@@ -3,6 +3,15 @@ package org.sipdroid.sipua;
 public class SipStatus {
     private String text;
     private int mInCallResId;
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public String getText() {
         return text;

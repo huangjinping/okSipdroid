@@ -1,9 +1,9 @@
 package org.sipdroid.sipua;
 
 public abstract class RegisterStatusCallBack {
-    int key;
+    String key;
 
-    public RegisterStatusCallBack(int key) {
+    public RegisterStatusCallBack(String key) {
         this.key = key;
     }
 
