@@ -16,10 +16,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.sipdroid.sipua.ConfigSip;
 import org.sipdroid.sipua.SipuaConfig;
+import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.SettingsNew;
+import org.sipdroid.sipua.ui.Sipdroid;
 import org.sipdroid.sipuademo.R;
 
 import java.util.ArrayList;
@@ -28,7 +31,9 @@ import java.util.List;
 
 public class NewsActivity extends Activity {
 
-    List<TextView> viewList;
+    List<TextView> mViewList;
+    List<TextView> mLoginViewList;
+
     AlertDialog permd;
     private EditText txt_username;
     private EditText txt_password;
@@ -37,6 +42,7 @@ public class NewsActivity extends Activity {
     private EditText txt_phone;
     private TextView txt_test;
     private LinearLayout layout_submit;
+    private LinearLayout layout_login;
     TextWatcher mTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -50,8 +56,12 @@ public class NewsActivity extends Activity {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            boolean b = checkAllViewFullText();
-            updateSubmitButtonStatus(b);
+            boolean isSubmit = checkAllViewFullText(mViewList);
+            updateSubmitButtonStatus(isSubmit, layout_submit);
+
+            boolean isLogin = checkAllViewFullText(mLoginViewList);
+            updateSubmitButtonStatus(isLogin, layout_login);
+
         }
     };
 
@@ -66,6 +76,7 @@ public class NewsActivity extends Activity {
         txt_phone = findViewById(R.id.txt_phone);
         layout_submit = findViewById(R.id.layout_submit);
         txt_test = findViewById(R.id.txt_test);
+        layout_login = findViewById(R.id.layout_login);
 
 
         txt_username.addTextChangedListener(mTextWatcher);
@@ -75,18 +86,31 @@ public class NewsActivity extends Activity {
         txt_phone.addTextChangedListener(mTextWatcher);
 
 
-        viewList = new ArrayList<>();
-        viewList.add(txt_username);
-        viewList.add(txt_password);
-        viewList.add(txt_server);
-        viewList.add(txt_port);
-        viewList.add(txt_phone);
+        mViewList = new ArrayList<>();
+        mViewList.add(txt_username);
+        mViewList.add(txt_password);
+        mViewList.add(txt_server);
+        mViewList.add(txt_port);
+        mViewList.add(txt_phone);
+
+        mLoginViewList = new ArrayList<>();
+        mLoginViewList.add(txt_username);
+        mLoginViewList.add(txt_password);
+        mLoginViewList.add(txt_server);
+        mLoginViewList.add(txt_port);
 
 
         layout_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onSubmit();
+            }
+        });
+
+        layout_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onLogin();
             }
         });
         initPermission();
@@ -137,7 +161,7 @@ public class NewsActivity extends Activity {
         }
     }
 
-    public boolean checkAllViewFullText() {
+    public boolean checkAllViewFullText(List<TextView> viewList) {
         for (TextView textView : viewList
         ) {
             String trim = textView.getText().toString().trim();
@@ -150,16 +174,39 @@ public class NewsActivity extends Activity {
     }
 
 
-    public void updateSubmitButtonStatus(boolean isEn) {
+    public void updateSubmitButtonStatus(boolean isEn, LinearLayout target) {
         if (isEn) {
-            layout_submit.setEnabled(true);
-            layout_submit.setBackgroundResource(R.drawable.bg_call_value);
+            target.setEnabled(true);
+            target.setBackgroundResource(R.drawable.bg_call_value);
         } else {
-            layout_submit.setEnabled(false);
-            layout_submit.setBackgroundResource(R.drawable.bg_call_value0);
+            target.setEnabled(false);
+            target.setBackgroundResource(R.drawable.bg_call_value0);
         }
     }
 
+
+    private void onLogin() {
+        try {
+            String userName = txt_username.getText().toString().trim();
+            String password = txt_password.getText().toString().trim();
+            String server = txt_server.getText().toString().trim();
+            String port = txt_port.getText().toString().trim();
+            ConfigSip configSip = new ConfigSip();
+            configSip.setServer(server);
+            configSip.setDns0("8.8.8.8");
+            configSip.setPort(port);
+            configSip.setUsername(userName);
+            configSip.setProtocol("TCP");
+            configSip.setPassword(password);
+            SipuaConfig.init(this, configSip);
+            Receiver.engine(this).registerMore();
+            Sipdroid.on(this, true);
+
+            Toast.makeText(this, "" + getString(R.string.reg), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private void onSubmit() {
 
@@ -181,21 +228,21 @@ public class NewsActivity extends Activity {
     }
 
     private void initData() {
-       try {
-           Context context = this;
-           String sharedPrefsFile = SipuaConfig.getSharedPrefsFile(context);
-           SharedPreferences sp = context.getSharedPreferences(sharedPrefsFile, MODE_PRIVATE);
-           String username = sp.getString("username", "");
-           String password = sp.getString("password", "");
-           String server = sp.getString("server", "");
-           String port = sp.getString("port", "");
-           txt_username.setText(username);
-           txt_password.setText(password);
-           txt_server.setText(server);
-           txt_port.setText(port);
-       }catch (Exception e){
-           e.printStackTrace();
-       }
+        try {
+            Context context = this;
+            String sharedPrefsFile = SipuaConfig.getSharedPrefsFile(context);
+            SharedPreferences sp = context.getSharedPreferences(sharedPrefsFile, MODE_PRIVATE);
+            String username = sp.getString("username", "");
+            String password = sp.getString("password", "");
+            String server = sp.getString("server", "");
+            String port = sp.getString("port", "");
+            txt_username.setText(username);
+            txt_password.setText(password);
+            txt_server.setText(server);
+            txt_port.setText(port);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
