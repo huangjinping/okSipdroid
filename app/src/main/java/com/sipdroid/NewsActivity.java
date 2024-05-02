@@ -14,11 +14,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.sipdroid.sipua.ConfigSip;
+import org.sipdroid.sipua.SipStatus;
 import org.sipdroid.sipua.SipuaConfig;
 import org.sipdroid.sipua.ui.Receiver;
 import org.sipdroid.sipua.ui.SettingsNew;
@@ -27,6 +29,7 @@ import org.sipdroid.sipuademo.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 public class NewsActivity extends Activity {
@@ -35,6 +38,11 @@ public class NewsActivity extends Activity {
     List<TextView> mLoginViewList;
 
     AlertDialog permd;
+    LinearLayout layout_sip;
+    ImageView img_sip_flag;
+    TextView txt_sip_title;
+    TextView txt_sip_sub_title;
+    SipUser mSipUser;
     private EditText txt_username;
     private EditText txt_password;
     private EditText txt_server;
@@ -77,6 +85,11 @@ public class NewsActivity extends Activity {
         layout_submit = findViewById(R.id.layout_submit);
         txt_test = findViewById(R.id.txt_test);
         layout_login = findViewById(R.id.layout_login);
+
+        layout_sip = findViewById(R.id.layout_sip);
+        img_sip_flag = findViewById(R.id.img_sip_flag);
+        txt_sip_title = findViewById(R.id.txt_sip_title);
+        txt_sip_sub_title = findViewById(R.id.txt_sip_sub_title);
 
 
         txt_username.addTextChangedListener(mTextWatcher);
@@ -123,6 +136,8 @@ public class NewsActivity extends Activity {
                 onTest();
             }
         });
+
+        initSip();
     }
 
     private void initPermission() {
@@ -173,7 +188,6 @@ public class NewsActivity extends Activity {
         return true;
     }
 
-
     public void updateSubmitButtonStatus(boolean isEn, LinearLayout target) {
         if (isEn) {
             target.setEnabled(true);
@@ -184,13 +198,14 @@ public class NewsActivity extends Activity {
         }
     }
 
-
     private void onLogin() {
         try {
             String userName = txt_username.getText().toString().trim();
             String password = txt_password.getText().toString().trim();
             String server = txt_server.getText().toString().trim();
             String port = txt_port.getText().toString().trim();
+
+            setStateName(userName, server);
             ConfigSip configSip = new ConfigSip();
             configSip.setServer(server);
             configSip.setDns0("8.8.8.8");
@@ -215,6 +230,7 @@ public class NewsActivity extends Activity {
         String server = txt_server.getText().toString().trim();
         String port = txt_port.getText().toString().trim();
         String phone = txt_phone.getText().toString().trim();
+        setStateName(userName, server);
 
         ConfigSip configSip = new ConfigSip();
         configSip.setServer(server);
@@ -240,11 +256,18 @@ public class NewsActivity extends Activity {
             txt_password.setText(password);
             txt_server.setText(server);
             txt_port.setText(port);
+            setStateName(username, server);
+
+            boolean isLogin = checkAllViewFullText(mLoginViewList);
+            if (isLogin){
+                Receiver.engine(this).registerMore();
+                Sipdroid.on(this, true);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     private void onTest() {
 //        ConfigSip configSip = new ConfigSip();
@@ -256,5 +279,62 @@ public class NewsActivity extends Activity {
 //        configSip.setProtocol("TCP");
 //        configSip.setPassword("!@#123Qw");
 //        SipuaConfig.init(this, configSip);
+    }
+
+    private void initSip() {
+
+
+        try {
+            mSipUser = new SipUser(this);
+            mSipUser.setCallBack(new OnSipCallBack() {
+                @Override
+                protected void onCallBack(SipStatus status) {
+                    onSetSipView(status);
+                }
+
+                @Override
+                protected void onCallBackTitle(String title) {
+
+                }
+
+                @Override
+                protected void onAfterRegister() {
+
+                }
+            }, UUID.randomUUID().toString());
+            mSipUser.initSip();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            mSipUser.unBind();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setStateName(String userName, String server) {
+        txt_sip_title.setText(userName + "@" + server);
+    }
+
+    private void onSetSipView(SipStatus status) {
+        try {
+            if (!TextUtils.isEmpty(status.getText())) {
+                txt_sip_sub_title.setText(status.getText());
+            }
+            if (0 != status.getmInCallResId()) {
+                img_sip_flag.setImageResource(status.getmInCallResId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
     }
 }
